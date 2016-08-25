@@ -461,6 +461,13 @@ HTMLtoJSX.prototype = {
         text = text.replace(/\n\s*/g, this._getIndentedNewline());
       }
     }
+    /* Enables insertion of functions into JSX
+    format: 'iobeamFn(functionName(comma,separated,args))'
+    Notes: 'this.function' is allowed, no spaces! */
+    text = text
+        .replace(/iobeamFn\((\S+)\((\S*)\)\)/g, function(match, fn, args) {
+            return '{' + fn + '(' + args.replace(' ', '').replace(',', ', ') + ')' + '}';
+        });
     this.output += text;
   },
 
