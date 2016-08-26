@@ -236,7 +236,9 @@ HTMLtoJSX.prototype = {
     this.output = this.output.replace(/iobeamFn\((.*)\)/g, function(match, p1) {
         var bracketedFn = '{' + p1 + '}'
         //remove any tags within the arguments
-        return bracketedFn.replace(/<[^<>]*>/, '');
+        return bracketedFn
+            .replace(/<[^<>]*>/, '')
+            .replace(/;(.*)$/, '($1)');
     });
 
     return this.output;
