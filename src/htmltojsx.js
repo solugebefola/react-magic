@@ -230,6 +230,15 @@ HTMLtoJSX.prototype = {
       this.output += this.config.indent + '}\n';
       this.output += '});';
     }else if (this.config.exports){ this.output += ';';}
+
+    //inserts any function listed under 'iobeamFn(yourFn;arg1,arg2,arg3)'
+    //note: no spaces!
+    this.output = this.output.replace(/iobeamFn\((.*)\)/g, function(match, p1) {
+        var bracketedFn = '{' + p1 + '}'
+        //remove any tags within the arguments
+        return bracketedFn.replace(/<[^<>]*>/, '');
+    });
+
     return this.output;
   },
 
